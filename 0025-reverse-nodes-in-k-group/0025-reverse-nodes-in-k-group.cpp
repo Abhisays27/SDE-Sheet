@@ -43,8 +43,8 @@ public:
         }
         
         // Recursively reverse the remaining list
-        if (next != NULL) {
-            head->next = reverseKGroup(next, k);
+        if (curr != NULL) {
+            head->next = reverseKGroup(curr, k);
         }
         
         // Return the new head of the reversed group
