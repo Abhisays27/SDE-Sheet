@@ -10,48 +10,24 @@
  */
 class Solution {
 public:
-    ListNode* reverseLL(ListNode* head) {
-        ListNode* curr = head;
-        ListNode* prev = NULL;
-        ListNode* fwd = NULL;
-        while (curr != NULL) {
-            fwd = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = fwd;
-        }
-        return prev;
-    }
-
+   
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        // Reverse the linked list
-        ListNode* reversedHead = reverseLL(head);
-
-        // Handle the case when n equals the length of the linked list
-        if (n == 1) {
-            ListNode* temp = reversedHead;
-            reversedHead = reversedHead->next;
-            delete temp;
-            return reverseLL(reversedHead);
+         ListNode* fast = head;
+                 ListNode* slow = head;
+        for(int i=0;i<n;i++){
+            fast=fast->next;
+            
         }
-
-        // Find the node before the one to be removed
-        ListNode* curr = reversedHead;
-        ListNode* prev = NULL;
-        int cnt = n - 1;
-        while (cnt > 0 && curr != NULL) {
-            prev = curr;
-            curr = curr->next;
-            cnt--;
+        if(fast==NULL) return head->next;
+        
+        while(fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next;
         }
-
-        // Remove the nth node from the end
-        if (prev != NULL) {
-            prev->next = curr->next;
-            delete curr;
-        }
-
-        // Reverse the modified linked list and return the head
-        return reverseLL(reversedHead);
+         ListNode* delNode = slow->next;
+        slow->next= delNode->next;
+        delete(delNode);
+        return head;
+       
     }
 };
