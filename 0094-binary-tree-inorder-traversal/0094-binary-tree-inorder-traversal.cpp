@@ -10,25 +10,35 @@
  * };
  */
 class Solution {
-
-    private :
-
-   void traversal(TreeNode* root,vector<int>& arr){
-
-        if(root==NULL){
-            return ;
-        }
-        traversal(root->left,arr);
-        arr.push_back(root->val);
-        traversal(root->right,arr);
-    }
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-
-       vector<int> arr;
-       traversal(root,arr);
-
-       return arr;
         
+        vector<int> inorder;
+        TreeNode* curr = root;
+        while(curr!=NULL){
+             if(curr->left==NULL){
+            inorder.push_back(curr->val);
+            curr=curr->right;
+        }
+        
+        else{
+            TreeNode* prev = curr->left;
+            while(prev->right!=NULL && prev->right!=curr){
+                prev=prev->right;
+            }
+            if(prev->right==NULL){
+                prev->right=curr;
+                curr=curr->left;
+            }
+            else{
+                prev->right=NULL;
+                inorder.push_back(curr->val);
+                curr=curr->right;
+            }
+        }
+        }
+       
+          return inorder;
     }
+
 };
