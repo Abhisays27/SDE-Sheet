@@ -5,9 +5,10 @@ class Solution {
             return;
         }
         //pick
-      
+      output.push_back(nums[index]);
         func(index+1,nums,output,ans);
-         output.push_back(nums[index]);
+        output.pop_back();
+         
          
          //not pick
         func(index+1,nums,output,ans);
