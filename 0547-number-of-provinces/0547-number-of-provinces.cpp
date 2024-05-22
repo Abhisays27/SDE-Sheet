@@ -18,7 +18,7 @@ public:
             for(int j=0;j<V;j++){
                 if(isConnected[i][j]==1 && i!=j){
                     adjlst[i].push_back(j);
-                     adjlst[j].push_back(i);
+                    
 
                 }
             }
