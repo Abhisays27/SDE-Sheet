@@ -6,11 +6,14 @@ public:
     return;
   }
   for (int i = ind; i < arr.size(); i++) {
-    if (i > ind && arr[i] == arr[i - 1]) continue;
-    if (arr[i] > target) break;
-    ds.push_back(arr[i]);
+    if (i!=ind && arr[i] == arr[i - 1]) continue;
+    if (arr[i] <=target){
+     ds.push_back(arr[i]);
     findCombination(i + 1, target - arr[i], arr, ans, ds);
     ds.pop_back();
+
+    }
+    
   }
 }
 vector < vector < int >> combinationSum2(vector < int > & candidates, int target) {
