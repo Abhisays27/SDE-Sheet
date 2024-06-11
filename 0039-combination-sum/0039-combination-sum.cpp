@@ -1,26 +1,27 @@
 class Solution {
-    void func(int index, vector<vector<int>>& ans,vector<int>& ds,vector<int>& arr, int target){
-        if(index==arr.size()){
+    private:
+    void solve(vector<int> arr, vector<int>& ds,vector<vector<int>> &ans,int target ,int index){
+        if(index>=arr.size()){
             if(target==0){
                 ans.push_back(ds);
             }
             return;
         }
 
-        //pick
-        if(arr[index]<=target){
+        //pick element 
+        if(target>=arr[index]){
             ds.push_back(arr[index]);
-            func(index,ans,ds,arr,target-arr[index]);
+            solve(arr,ds,ans,target-arr[index],index);
             ds.pop_back();
         }
-        func(index+1,ans,ds,arr,target);
-
+        //not pick
+        solve(arr,ds,ans,target,index+1);
     }
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<vector<int>> ans;
-        vector<int> ds;
-        func(0,ans,ds,candidates,target);
+       vector<vector<int>> ans;
+       vector<int> ds;
+        solve(candidates,ds,ans,target,0);
         return ans;
         
     }
