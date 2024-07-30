@@ -1,7 +1,7 @@
 class Solution {
     private:
     void solve(vector<int> arr, vector<int>& ds,vector<vector<int>> &ans,int target ,int index){
-        if(index>=arr.size()){
+        if(index < 0){
             if(target==0){
                 ans.push_back(ds);
             }
@@ -15,13 +15,13 @@ class Solution {
             ds.pop_back();
         }
         //not pick
-        solve(arr,ds,ans,target,index+1);
+        solve(arr,ds,ans,target,index-1);
     }
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
        vector<vector<int>> ans;
        vector<int> ds;
-        solve(candidates,ds,ans,target,0);
+        solve(candidates,ds,ans,target,candidates.size()-1);
         return ans;
         
     }
