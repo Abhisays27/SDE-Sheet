@@ -1,20 +1,26 @@
 class Solution {
 public:
-    void recursion(vector<int> num, int i, int j, vector<vector<int> > &res) {
-        if (i == j-1) {
-            res.push_back(num);
+    void func(int index, vector<vector<int>>& ans, vector<int>& nums) {
+        if (index >= nums.size()) {
+            ans.push_back(nums);
             return;
         }
-        for (int k = i; k < j; k++) {
-            if (i != k && num[i] == num[k]) continue;
-            swap(num[i], num[k]);
-            recursion(num, i+1, j, res);
+
+        for (int i = index; i < nums.size(); i++) {
+            // Skip duplicates
+           if (i != index && nums[i] == nums[index]) {
+                continue;
+            }
+            swap(nums[index], nums[i]);
+            func(index + 1, ans, nums);
+            swap(nums[index], nums[i]); // Backtrack
         }
     }
-    vector<vector<int> > permuteUnique(vector<int> &num) {
-        sort(num.begin(), num.end());
-        vector<vector<int> >res;
-        recursion(num, 0, num.size(), res);
-        return res;
+
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(), nums.end()); // Sort the numbers to handle duplicates
+        vector<vector<int>> ans;
+        func(0, ans, nums);
+        return ans;
     }
 };
