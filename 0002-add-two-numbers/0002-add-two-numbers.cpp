@@ -15,7 +15,7 @@ public:
         ListNode* temp=dummy;
         
         int carry=0;
-        while(l1!=NULL || l2!=NULL || carry!=0){
+        while(l1!=NULL || l2!=NULL ){ 
             int sum=0;
             if(l1!=NULL){
                 sum+=l1->val;
@@ -33,6 +33,8 @@ public:
             temp->next=node;
             temp=temp->next;
         }
+
+        if(carry!=0) temp->next = new ListNode(carry);
         return dummy->next;
         
     }
