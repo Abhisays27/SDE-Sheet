@@ -1,31 +1,46 @@
+#include <vector>
+#include <deque>
+
+using namespace std;
+
 class Solution {
 public:
-//  deque < int > dq;
-//   vector < int > ans;
-//   for (int i = 0; i < nums.size(); i++) {
-//     if (!dq.empty() && dq.front() == i - k) dq.pop_front();
-
-//     while (!dq.empty() && nums[dq.back()] < nums[i])
-//       dq.pop_back();
-
-//     dq.push_back(i);
-//     if (i >= k - 1) ans.push_back(nums[dq.front()]);
-//   }
-//   return ans;
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        deque<int> dq;
         vector<int> ans;
+        deque<int> dq;  // Stores elements
 
-        for(int i=0;i<nums.size();i++){
-            if(!dq.empty() && dq.front() == i-k) dq.pop_front();
+        int i = 0;
+        int j = 0;
 
-            while(!dq.empty() && nums[dq.back()] <nums[i])
+        while (j < nums.size()) {
+            // Remove elements from the back of deque if they are smaller than the current element
+            while (!dq.empty() && dq.back() < nums[j]) {
                 dq.pop_back();
-                dq.push_back(i);
-            
+            }
 
-           if (i >= k - 1) ans.push_back(nums[dq.front()]);
+            // Add the current element to the deque
+            dq.push_back(nums[j]);
+
+            // If the window size is smaller than k, just increment j
+            if (j - i + 1 < k) {
+                j++;
+            }
+            // If the window size is exactly k
+            else if (j - i + 1 == k) {
+                // The element at the front of the deque is the maximum for this window
+                ans.push_back(dq.front());
+
+                // Remove the element going out of the window from the deque
+                if (dq.front() == nums[i]) {
+                    dq.pop_front();
+                }
+
+                // Slide the window forward
+                i++;
+                j++;
+            }
         }
+
         return ans;
     }
 };
