@@ -12,19 +12,27 @@ public:
 
         while (left <= right && top <= bottom) {
             //------>
-
-            for (int i = left; i <= right; i++) {
+           if (top <= bottom){
+             for (int i = left; i <= right; i++) {
                 ans.push_back(matrix[top][i]);
             }
             top++;
 
+           }
+           
+
 
             // right to bottom
 
-            for (int i = top; i <= bottom; i++) {
+            if (left <= right) {
+                 for (int i = top; i <= bottom; i++) {
                 ans.push_back(matrix[i][right]);
             }
             right--;
+
+            }
+
+           
 
             // bottom right to left
             if (top <= bottom) {
@@ -33,6 +41,9 @@ public:
                 }
                 bottom--;
             }
+
+
+            
 
             // from bottom to top
             if (left <= right) {
