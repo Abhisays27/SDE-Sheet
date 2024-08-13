@@ -19,28 +19,37 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        if(root==NULL){
-            return NULL;
+       if (root == nullptr) {
+            return nullptr;
         }
-        Node* curr=root;
-        while(curr->left!=NULL){
-            Node* temp=curr;
-            while(temp!=NULL){
-                temp->left->next=temp->right;
-                if(temp->next==NULL){
-                    temp->right->next=NULL;
-                }
-                else{
-                     temp->right->next=temp->next->left;
 
-                }
-                temp=temp->next;
+        Node* levelStart = root;
 
-               
+        while (levelStart != nullptr) {
+            Node* curr = levelStart;
+            Node* dummy = new Node(0); 
+            Node* prev = dummy;
+
+            while (curr != nullptr) {
+                if (curr->left != nullptr) {
+                    prev->next = curr->left;
+                    prev = prev->next;
+                }
+
+                if (curr->right != nullptr) {
+                    prev->next = curr->right;
+                    prev = prev->next;
+                }
+
+                curr = curr->next;
             }
-            curr=curr->left;
+
+            levelStart = dummy->next; 
+            delete dummy; 
         }
+
         return root;
-        
     }
+        
+    
 };
