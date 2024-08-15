@@ -23,8 +23,8 @@ public:
             }
             if(bills[i]==20){
 
-                if(left5>=2 && left10>=1){
-                    left5-=2;
+                if(left5>=1 && left10>=1){
+                    left5--;;
                     left10--;
                 }
                else  if(left5>=3){
