@@ -44,6 +44,7 @@ public:
 
                 curr = curr->next;
             }
+            prev->next=NULL;
 
             levelStart = dummy->next; 
             delete dummy; 
