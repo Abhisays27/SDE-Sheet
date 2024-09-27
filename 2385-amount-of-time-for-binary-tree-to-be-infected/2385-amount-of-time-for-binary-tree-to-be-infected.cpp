@@ -10,57 +10,76 @@
  * };
  */
 class Solution {
-    int Burn(TreeNode* root, int& timer, int start){
-        if(!root){
+    int burnTree(TreeNode* root, int &timer,int start){
+
+        if(root==NULL){
             return 0;
         }
-        if(root->val==start){
+        if(root->val == start){
             return -1;
         }
-        int left = Burn(root->left,timer,start);
-        int right = Burn(root->right,timer,start);
-  //agr burn left se hua 
+        
+
+        int left = burnTree(root->left,timer,start);
+        int right = burnTree(root->right,timer,start);
+
         if(left<0){
-            timer = max(timer,right+abs(left));
+            timer = max(timer,abs(left) + right);
             return left-1;
         }
-  //agr burn right se hua 
+
         if(right<0){
-            timer = max(timer,left+abs(right));
-            return right-1;
+            timer = max(timer, abs(right) + left);
+            return right - 1;
         }
         else{
-            return max(left,right)+1;
+             return max(left,right)+1;
         }
+
+        
+
+
     }
 
-    void find(TreeNode* root,int target,TreeNode*& BurnNode){
-        if(!root){
+
+    void findStart(TreeNode* root, int start,TreeNode* &startNode){
+        if(root==NULL) {
             return;
         }
-        if(root->val==target){
-            BurnNode=root;
-            return;
+        if (root->val==start){
+            startNode = root;
+            return ;
         }
-        find(root->left,target,BurnNode);
-        find(root->right,target,BurnNode);
+        
+        findStart(root->left,start,startNode);
+        findStart(root->right,start,startNode);
+        
     }
-    int height(TreeNode* root){
-        if(!root){
+
+    int findHeight(TreeNode* root){
+        if(root==NULL){
             return 0;
         }
-        return 1+max(height(root->left),height(root->right));
+
+        int left = findHeight(root->left);
+        int right = findHeight(root->right);
+        return max(left,right) + 1;
     }
 public:
     int amountOfTime(TreeNode* root, int start) {
-        int timer=0;
-        Burn(root,timer,start);
+      
+     TreeNode* startNode = NULL;
+      findStart(root,start,startNode);
+       
+        
+       int subTreeHeight = findHeight(startNode);
+       int aboveTime = 0;
+       burnTree(root,aboveTime,start);
 
-        //target ke neeche ka
-        TreeNode* BurnNode = NULL;
-        find(root,start,BurnNode);
-        int high = height(BurnNode)-1;
-        return max(high,timer);
+
+       return max(subTreeHeight-1,aboveTime);
+
+
         
     }
 };
